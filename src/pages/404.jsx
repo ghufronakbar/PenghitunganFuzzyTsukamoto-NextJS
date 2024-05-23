@@ -11,7 +11,8 @@ export default function Custom404() {
       minHeight="100vh"
       flexDirection="column"
     >
-      <Heading>Event Ease: Page 404 - Not Found</Heading>
+      <Heading>Page 404 - Not Found</Heading>
+      <Text mt={4}>{process.env.NEXT_PUBLIC_APP_NAME}</Text>
       <Image
       src='/404.jpg'
       width={500}
@@ -23,10 +24,10 @@ export default function Custom404() {
           color="blue"
           cursor="pointer"
           onClick={() => {
-            router.push(`/admin/event`);
+            router.push(`/calculate`);
           }}
         >
-          Dashboard
+          Page
         </Text>
       </Text>
     </Flex>

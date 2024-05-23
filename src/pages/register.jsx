@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { LockIcon } from "@chakra-ui/icons";
 
-import { HeadAdmin } from "@/components/HeadApp";
+import { HeadApp } from "@/components/HeadApp";
 import { primaryColor, white } from "@/lib/color";
 import { axiosInstance } from "@/lib/axiosInstance";
 
@@ -92,7 +92,7 @@ export default function Register() {
 
   return (
     <Box minH="100vh" display="flex" flexDirection="column">
-      {HeadAdmin()}
+      {HeadApp()}
       <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} flex="1">
         <Box
           display={{ base: "none", md: "block" }}

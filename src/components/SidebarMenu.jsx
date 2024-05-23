@@ -10,7 +10,7 @@ export function SidebarMenu() {
   const router = useRouter();
 
   const { data: profileSB, isLoading: loadingProfileSB, refetch: refetchProfileSB } = useQuery({
-    queryKey: ["profile"],
+    queryKey: ["profileSB"],
     queryFn: async () => {
       const { data } = await axiosInstanceAuthorization.get("/profile");      
       return data.user;

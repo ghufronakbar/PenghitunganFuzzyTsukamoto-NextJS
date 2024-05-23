@@ -48,7 +48,7 @@ const ShowRulesImage = () => {
                 setIsModalSupply(false);
               }}
             >
-              Finish
+              Done
             </Button>
           </ModalFooter>
         </ModalContent>

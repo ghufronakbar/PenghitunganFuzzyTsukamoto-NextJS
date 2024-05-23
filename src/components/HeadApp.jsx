@@ -1,6 +1,6 @@
 import Head from "next/head"
 
-export const HeadAdmin = () => {
+export const HeadApp = () => {
         return (
             <Head>
                 <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>

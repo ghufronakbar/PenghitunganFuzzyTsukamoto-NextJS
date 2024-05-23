@@ -2,7 +2,6 @@ import {
   Box,
   Center,
   Flex,
-  Image,
   VStack,
   FormControl,
   FormLabel,
@@ -13,51 +12,34 @@ import {
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstanceAuthorization from "@/lib/axiosInstanceAuthorization";
-import { LoadingComponent } from "../LoadingComponent";
 import { Loading } from "../Loading";
 
 export function DetailProfile() {
   const toast = useToast();
-  const [loading, setLoading] = useState(true);
-  const [organizationName, setOrganizationName] = useState("");
-  const [logo, setLogo] = useState(null);
-  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [fullname, setFullname] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmationPassword, setConfirmationPassword] = useState("");
   const [profile, setProfile] = useState(null);
-  const [error, setError]=useState(false)
 
-  const { data: dataProfile, refetch: refetchDataProfile } = useQuery({
+  const { isLoading, isError, refetch: refetchDataProfile } = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
       const { data } = await axiosInstanceAuthorization.get(`/profile`);
-      const profileData = data[0];
+      const profileData = data.user;
       setProfile(profileData);
-      setOrganizationName(profileData.organization_name);
-      setPhone(profileData.phone);
       setEmail(profileData.email);
-      setLoading(false);
-      return data;
+      setFullname(profileData.fullname)
+      return profileData;
     },
   });
 
-  
-  const handleUpdate = async () => {
-    const formData = new FormData();
-    formData.append("organization_name", organizationName);
-    formData.append("phone", phone);
-    formData.append("email", email);
-    if (logo) {
-      formData.append("logo", logo);
-    }
-
+  const handleUpdateProfile = async () => {
     try {
-      const response = await axiosInstanceAuthorization.put(`/profile/edit`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      await axiosInstanceAuthorization.put(`/profile/edit`, {
+        email,
+        fullname,
       });
 
       toast({
@@ -75,12 +57,12 @@ export function DetailProfile() {
     }
   };
 
-  const handlePassword = async () => {
+  const handleUpdatePassword = async () => {
     try {
       if (newPassword === confirmationPassword) {
-        await axiosInstanceAuthorization.put(`/profile/edit/password`, {
+        await axiosInstanceAuthorization.put(`/profile/password`, {
           old_password: oldPassword,
-          new_password: newPassword,
+          password: newPassword,
         });
         toast({
           title: "Successfully changed password",
@@ -105,8 +87,8 @@ export function DetailProfile() {
     }
   };
 
-  if (loading) return <Loading/>;
-  if (error) return <div>Error fetching data</div>;
+  if (isLoading) return <Loading />;
+  if (isError) return <div>Error fetching data</div>;
 
   return (
     <>
@@ -121,50 +103,6 @@ export function DetailProfile() {
             flex={2}
           >
             <form>
-              <Center>
-                {logo ? (
-                  <Image
-                    src={URL.createObjectURL(logo)}
-                    alt="Selected Logo"
-                    layout="fill"
-                    boxSize="150px"
-                    borderRadius="50%"
-                    objectFit="cover"
-                  />
-                ) : (
-                  profile.logo && (
-                    <Image
-                      src={profile.logo}
-                      alt="Organization Logo"
-                      layout="fill"
-                      boxSize="150px"
-                      borderRadius="50%"
-                      objectFit="cover"
-                    />
-                  )
-                )}
-              </Center>
-              <FormControl my={6}>
-                <FormLabel>Logo</FormLabel>
-                <Input
-                  type="file"
-                  onChange={(e) => setLogo(e.target.files[0])}
-                />
-              </FormControl>
-              <FormControl my={6}>
-                <FormLabel>Organization Name</FormLabel>
-                <Input
-                  value={organizationName}
-                  onChange={(e) => setOrganizationName(e.target.value)}
-                />
-              </FormControl>
-              <FormControl my={6}>
-                <FormLabel>Phone</FormLabel>
-                <Input
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </FormControl>
               <FormControl my={6}>
                 <FormLabel>Email</FormLabel>
                 <Input
@@ -172,8 +110,15 @@ export function DetailProfile() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </FormControl>
+              <FormControl my={6}>
+                <FormLabel>Fullname</FormLabel>
+                <Input
+                  value={fullname}
+                  onChange={(e) => setFullname(e.target.value)}
+                />
+              </FormControl>
               <VStack>
-                <Button onClick={handleUpdate}>Update</Button>
+                <Button onClick={handleUpdateProfile}>Update Profile</Button>
               </VStack>
             </form>
           </Box>
@@ -211,7 +156,7 @@ export function DetailProfile() {
                 />
               </FormControl>
               <VStack>
-                <Button onClick={handlePassword}>Update</Button>
+                <Button onClick={handleUpdatePassword}>Update Password</Button>
               </VStack>
             </form>
           </Box>

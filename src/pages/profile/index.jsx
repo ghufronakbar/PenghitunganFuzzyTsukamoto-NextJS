@@ -1,15 +1,13 @@
 import { Container, Flex, Heading } from "@chakra-ui/react";
-import { HeadAdmin } from "@/components/HeadApp";
-import { NavbarAdmin } from "@/components/NavbarAdmin";
+import { HeadApp } from "@/components/HeadApp";
 import { withAuth } from "@/lib/authorization";
 import { DetailProfile } from "@/components/detail/DetailProfile";
-import { SidebarMenu } from "@/components/SidebarOrganization";
+import { SidebarMenu } from "@/components/SidebarMenu";
 
 function Profile() {
   return (
     <>
-      <HeadAdmin />
-      <NavbarAdmin />
+      <HeadApp />
       <main>
         <Flex>
           <SidebarMenu flex={1} />

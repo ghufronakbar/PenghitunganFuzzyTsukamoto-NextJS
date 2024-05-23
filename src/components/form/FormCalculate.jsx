@@ -35,7 +35,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { Loading } from "../Loading";
 import axiosInstanceAuthorization from "@/lib/axiosInstanceAuthorization";
-import { primaryColor, white } from "@/lib/color";
+import { primaryColor, secondaryColor, white } from "@/lib/color";
 
 export function FormCalculate() {
   const router = useRouter();
@@ -44,7 +44,7 @@ export function FormCalculate() {
   const [inputPersediaan, setInputPersediaan] = useState("");
   const [inputPermintaan, setInputPermintaan] = useState("");
 
-  const [isResultOpen, setIsResultOpen] = useState();
+  const [isResultOpen, setIsResultOpen] = useState(false);
 
   const [valuePersediaan, setValuePersediaan] = useState();
   const [valuePermintaan, setValuePermintaan] = useState();
@@ -82,7 +82,7 @@ export function FormCalculate() {
   const [valueProduksiEsBatu, setValueProduksiEsBatu] = useState();
   const [valueDatetime, setValueDatetime] = useState();
 
-  const handleCalculate = async () => {
+  const HandleCalculate = async () => {
     try {
       if (!(inputPersediaan && inputPermintaan)) {
         toast({
@@ -162,37 +162,6 @@ export function FormCalculate() {
       setValueR4Aixzi(r4_aixzi);
       setValueProduksiEsBatu(produksi_es_batu);
       setValueDatetime(datetime);
-
-      console.log(`
-  Persediaan: ${valuePersediaan}
-  Permintaan: ${valuePermintaan}
-  Produksi: ${valueProduksi}
-  Derajat keanggotaan persediaan: ${valueDerajatKeanggotaanPersediaan}
-  Derajat keanggotaan permintaan: ${valueDerajatKeanggotaanPermintaan}
-  Derajat keanggotaan produksi: ${valueDerajatKeanggotaanProduksi}
-  R1 Derajat persediaan: ${valueR1DerajatPersediaan}
-  R1 Derajat permintaan: ${valueR1DerajatPermintaan}
-  R1 Alpha: ${valueR1Alpha}
-  R1 Zi: ${valueR1Zi}
-  R1 Aixzi: ${valueR1Aixzi}
-  R2 Derajat persediaan: ${valueR2DerajatPersediaan}
-  R2 Derajat permintaan: ${valueR2DerajatPermintaan}
-  R2 Alpha: ${valueR2Alpha}
-  R2 Zi: ${valueR2Zi}
-  R2 Aixzi: ${valueR2Aixzi}
-  R3 Derajat persediaan: ${valueR3DerajatPersediaan}
-  R3 Derajat permintaan: ${valueR3DerajatPermintaan}
-  R3 Alpha: ${valueR3Alpha}
-  R3 Zi: ${valueR3Zi}
-  R3 Aixzi: ${valueR3Aixzi}
-  R4 Derajat persediaan: ${valueR4DerajatPersediaan}
-  R4 Derajat permintaan: ${valueR4DerajatPermintaan}
-  R4 Alpha: ${valueR4Alpha}
-  R4 Zi: ${valueR4Zi}
-  R4 Aixzi: ${valueR4Aixzi}
-  Produksi es batu: ${valueProduksiEsBatu}
-  Datetime: ${valueDatetime}
-`);
       setIsResultOpen(true);
     } catch (error) {
       let errorMessage = "Error while calculating";
@@ -212,7 +181,7 @@ export function FormCalculate() {
     }
   };
 
-  const modalResult = () => {
+  const ModalResult = () => {
     return (
       <Modal
         size="full"
@@ -246,17 +215,95 @@ export function FormCalculate() {
                   <Tr>
                     <Td>Supply</Td>
                     <Td>{valuePersediaan}</Td>
-                    <Td>{valueDerajatKeanggotaanPersediaan}</Td>
+                    <Td>
+                      <Center>
+                        {valueDerajatKeanggotaanPersediaan == 0 ? (
+                          <Box
+                            as="button"
+                            borderRadius="md"
+                            bg={secondaryColor}
+                            color={white}
+                            px={4}
+                            h={8}
+                          >
+                            A Little
+                          </Box>
+                        ) : (
+                          <Box
+                            as="button"
+                            borderRadius="md"
+                            bg={primaryColor}
+                            color={white}
+                            px={4}
+                            h={8}
+                          >
+                            A Lot
+                          </Box>
+                        )}
+                      </Center>
+                    </Td>
                   </Tr>
                   <Tr>
                     <Td>Demand</Td>
                     <Td>{valuePermintaan}</Td>
-                    <Td>{valueDerajatKeanggotaanPermintaan}</Td>
+                    <Td>
+                      <Center>
+                        {valueDerajatKeanggotaanPermintaan == 0 ? (
+                          <Box
+                            as="button"
+                            borderRadius="md"
+                            bg={secondaryColor}
+                            color={white}
+                            px={4}
+                            h={8}
+                          >
+                            A Little
+                          </Box>
+                        ) : (
+                          <Box
+                            as="button"
+                            borderRadius="md"
+                            bg={primaryColor}
+                            color={white}
+                            px={4}
+                            h={8}
+                          >
+                            A Lot
+                          </Box>
+                        )}
+                      </Center>
+                    </Td>
                   </Tr>
                   <Tr>
                     <Td>Ice Cube Production</Td>
                     <Td>{valueProduksi}</Td>
-                    <Td>{valueDerajatKeanggotaanProduksi}</Td>
+                    <Td>
+                      <Center>
+                        {valueDerajatKeanggotaanProduksi == 0 ? (
+                          <Box
+                            as="button"
+                            borderRadius="md"
+                            bg={secondaryColor}
+                            color={white}
+                            px={4}
+                            h={8}
+                          >
+                            A Little
+                          </Box>
+                        ) : (
+                          <Box
+                            as="button"
+                            borderRadius="md"
+                            bg={primaryColor}
+                            color={white}
+                            px={4}
+                            h={8}
+                          >
+                            A Lot
+                          </Box>
+                        )}
+                      </Center>
+                    </Td>
                   </Tr>
                 </Tbody>
               </TableContainer>
@@ -420,14 +467,14 @@ export function FormCalculate() {
             bg={primaryColor}
             color={white}
             onClick={() => {
-              handleCalculate();
+              HandleCalculate();
             }}
           >
             Calculate
           </Button>
         </VStack>
       </form>
-      {modalResult()}
+      {ModalResult()}
     </>
   );
 }
