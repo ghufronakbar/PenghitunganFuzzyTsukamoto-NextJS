@@ -1,4 +1,4 @@
-import { HeadAdmin } from "@/components/HeadAdmin";
+import { HeadAdmin } from "@/components/HeadApp";
 import { Container, Flex } from "@chakra-ui/react";
 import { withAuth } from "@/lib/authorization";
 import { SidebarMenu } from "@/components/SidebarOrganization";

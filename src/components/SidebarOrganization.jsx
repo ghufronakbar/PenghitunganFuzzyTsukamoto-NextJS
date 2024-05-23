@@ -9,22 +9,22 @@ import Image from "next/image";
 export function SidebarMenu() {
   const router = useRouter();
 
-  const { data: profileSB, isLoading: loadingProfileSB } = useQuery({
-    queryKey: ["profileSB"],
+  const { data: profileSB, isLoading: loadingProfileSB, refetch: refetchProfileSB } = useQuery({
+    queryKey: ["profile"],
     queryFn: async () => {
-      const { data } = await axiosInstanceAuthorization.get("/profile");
-      return data[0];
+      const { data } = await axiosInstanceAuthorization.get("/profile");      
+      return data.user;
     },
   });
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    router.push("/admin/login");
+    router.push("/login");
   };
-
+  
   return (
     <>
-      {!loadingProfileSB && profileSB && (
+      
         <Sidebar>
           <br />
           <Box
@@ -37,55 +37,22 @@ export function SidebarMenu() {
             flexDirection="column"
             alignItems="center"
           >
-            <Stack onClick={() => router.push(`/admin/profile`)}>
-              <Center>
-                {profileSB.logo ? (
-                  <Box
-                    width="70px"
-                    height="70px"
-                    borderRadius="50%"
-                    overflow="hidden"
-                    position="relative"
-                  >
-                    <Image
-                      src={profileSB.logo}
-                      alt="Organization Logo"
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  </Box>
-                ) : ""}
-              </Center>
+            <Stack onClick={() => router.push(`/profile`)}>
+             
               <Text as="b" fontSize="2xl" color={secondaryColor} textAlign="center">
-                {profileSB.organization_name}
+                {profileSB && (profileSB.fullname)}
               </Text>
             </Stack>
           </Box>
           <br />
           <br />
           <Menu>
-            <MenuItem onClick={() => router.push(`/admin/event/scan`)}>🔎 Scan Tickets</MenuItem>
-            <SubMenu label="🧾 Events">
-              <MenuItem onClick={() => router.push(`/admin/event`)}>📑 All Event</MenuItem>
-              <MenuItem onClick={() => router.push(`/admin/event?time=past&status=`)}>⏳ Past Event</MenuItem>
-              <MenuItem onClick={() => router.push(`/admin/event?time=on-going&status=`)}>🎊 On Going</MenuItem>
-              <MenuItem onClick={() => router.push(`/admin/event?time=soon&status=`)}>🕝 Coming Soon</MenuItem>
-              <MenuItem onClick={() => router.push(`/admin/event?status=0&time=`)}>⌚ Waiting for approval</MenuItem>
-              <MenuItem onClick={() => router.push(`/admin/event?status=1&time=`)}>❌ Rejected by Admin</MenuItem>
-              <MenuItem onClick={() => router.push(`/admin/event?status=2&time=`)}>✅ Approved</MenuItem>
-            </SubMenu>
-            <SubMenu label="📒 Orders">
-              <MenuItem onClick={() => router.push(`/admin/orders`)}>🎫 All Order</MenuItem>
-              <MenuItem onClick={() => router.push(`/admin/orders?paid=0`)}>⏲️ Pending</MenuItem>
-              <MenuItem onClick={() => router.push(`/admin/orders?paid=1`)}>✖️ Cancelled by User</MenuItem>
-              <MenuItem onClick={() => router.push(`/admin/orders?paid=2`)}>🎟️ Anomaly Transaction</MenuItem>
-              <MenuItem onClick={() => router.push(`/admin/orders?paid=3`)}>💵 Paid</MenuItem>
-              <MenuItem onClick={() => router.push(`/admin/orders?paid=4`)}>☑️ Confirmed</MenuItem>
-            </SubMenu>
+            <MenuItem onClick={() => router.push(`/calculate`)}>🧮 Calculate</MenuItem>
+            <MenuItem onClick={() => router.push(`/history`)}>📒 History</MenuItem>           
             <MenuItem onClick={handleLogout}>🔒 Logout</MenuItem>
           </Menu>
         </Sidebar>
-      )}
+      
     </>
   );
 }

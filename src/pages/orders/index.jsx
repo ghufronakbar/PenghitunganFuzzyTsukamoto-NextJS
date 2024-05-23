@@ -1,21 +1,21 @@
-import { HeadAdmin } from "@/components/HeadAdmin";
+import { HeadAdmin } from "@/components/HeadApp";
 import { SidebarMenu } from "@/components/SidebarOrganization";
-import { TableEvent } from "@/components/table/TableEvent";
+import { TableHistory } from "@/components/table/TableHistory";
 import { withAuth } from "@/lib/authorization";
 import { Container, Flex, Heading } from "@chakra-ui/react";
 
-function Event() {
+function Orders() {
   return (
     <>
       <HeadAdmin />
       <main>
         <Flex>
-          <SidebarMenu flex={1} />{" "}
+          <SidebarMenu flex={1} />
           <Container maxW="80%">
             <Heading marginBottom="8" marginTop="8">
-              Data Event
+              Data Orders
             </Heading>
-            <TableEvent />
+            {TableHistory()}
           </Container>
         </Flex>
       </main>
@@ -23,4 +23,4 @@ function Event() {
   );
 }
 
-export default withAuth(Event);
+export default withAuth(Orders);

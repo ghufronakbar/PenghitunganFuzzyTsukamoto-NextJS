@@ -1,6 +1,6 @@
-import { HeadAdmin } from "@/components/HeadAdmin";
+import { HeadAdmin } from "@/components/HeadApp";
 import { SidebarMenu } from "@/components/SidebarOrganization";
-import { TableOrders } from "@/components/table/TableOrders";
+import { TableHistory } from "@/components/table/TableHistory";
 import { withAuth } from "@/lib/authorization";
 
 import { Container, Flex, Heading } from "@chakra-ui/react";
@@ -16,7 +16,7 @@ function Pending() {
             <Heading marginBottom="8" marginTop="8">
               Pending Orders
             </Heading>
-            {TableOrders("0")}
+            {TableHistory("0")}
           </Container>
         </Flex>
       </main>

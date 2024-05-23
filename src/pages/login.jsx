@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { LockIcon } from "@chakra-ui/icons";
 import {axiosInstance} from "@/lib/axiosInstance"; // Adjust the import according to your file structure
-import { HeadAdmin } from "@/components/HeadAdmin"; // Adjust the import according to your file structure
+import { HeadAdmin } from "@/components/HeadApp"; // Adjust the import according to your file structure
 import { primaryColor, white } from "@/lib/color";
 
 function Copyright(props) {
@@ -28,7 +28,7 @@ function Copyright(props) {
     <Text align="center" {...props}>
       {"Copyright © "}
       <Link color="blue.500" href={process.env.BASE_URL}>
-        Event Ease
+      {process.env.NEXT_PUBLIC_APP_NAME}
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -62,7 +62,7 @@ export default function SignInSide() {
           isClosable: true,
         });
 
-        router.push(`/admin/event`);
+        router.push(`/calculate`);
       } else {
         console.log(response);
         setError(message);
@@ -101,7 +101,7 @@ export default function SignInSide() {
           <Flex align="center" justify="center" direction="column">
             <Avatar bg={primaryColor} icon={<LockIcon />} mb={4} />
             <Heading as="h1" size="lg" mb={6}>
-              Login as Admin Organization
+              Login
             </Heading>
             <Box as="form" w="100%" onSubmit={handleLogin}>
               <VStack spacing={4}>
@@ -131,7 +131,7 @@ export default function SignInSide() {
               <Flex justify="space-between" mt={4}>
                 <HStack
                   onClick={() => {
-                    router.push(`/admin/register`);
+                    router.push(`/register`);
                   }}
                 >
                   <Text>Don't have an account?</Text>

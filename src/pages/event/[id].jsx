@@ -1,4 +1,4 @@
-import { HeadAdmin } from "@/components/HeadAdmin";
+import { HeadAdmin } from "@/components/HeadApp";
 import { FormEventEdit } from "@/components/form/FormEventEdit";
 import { Container, Flex } from "@chakra-ui/react";
 import Event from ".";

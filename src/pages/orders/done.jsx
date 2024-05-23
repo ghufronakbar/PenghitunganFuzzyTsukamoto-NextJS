@@ -1,10 +1,11 @@
-import { HeadAdmin } from "@/components/HeadAdmin";
+import { HeadAdmin } from "@/components/HeadApp";
 import { SidebarMenu } from "@/components/SidebarOrganization";
-import { TableOrders } from "@/components/table/TableOrders";
+import { TableHistory } from "@/components/table/TableHistory";
 import { withAuth } from "@/lib/authorization";
+
 import { Container, Flex, Heading } from "@chakra-ui/react";
 
-function CancelByAdmin() {
+function Done() {
   return (
     <>
       <HeadAdmin />
@@ -13,9 +14,9 @@ function CancelByAdmin() {
           <SidebarMenu flex={1} />
           <Container maxW="80%">
             <Heading marginBottom="8" marginTop="8">
-            Cancelled By Admin Orders
+              Finished Orders
             </Heading>
-            {TableOrders(2)}
+            {TableHistory(6)}
           </Container>
         </Flex>
       </main>
@@ -23,4 +24,4 @@ function CancelByAdmin() {
   );
 }
 
-export default withAuth(CancelByAdmin);
+export default withAuth(Done);

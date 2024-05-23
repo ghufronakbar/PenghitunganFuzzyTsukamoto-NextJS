@@ -1,5 +1,5 @@
 import { Container, Flex, Heading } from "@chakra-ui/react";
-import { HeadAdmin } from "@/components/HeadAdmin";
+import { HeadAdmin } from "@/components/HeadApp";
 import { NavbarAdmin } from "@/components/NavbarAdmin";
 import { withAuth } from "@/lib/authorization";
 import { DetailProfile } from "@/components/detail/DetailProfile";

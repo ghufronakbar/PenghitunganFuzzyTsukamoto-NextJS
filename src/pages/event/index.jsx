@@ -1,22 +1,21 @@
-import { HeadAdmin } from "@/components/HeadAdmin";
+import { HeadAdmin } from "@/components/HeadApp";
 import { SidebarMenu } from "@/components/SidebarOrganization";
-import { TableOrders } from "@/components/table/TableOrders";
+import { TableEvent } from "@/components/table/TableEvent";
 import { withAuth } from "@/lib/authorization";
-
 import { Container, Flex, Heading } from "@chakra-ui/react";
 
-function CancelByUser() {
+function Event() {
   return (
     <>
       <HeadAdmin />
       <main>
         <Flex>
-          <SidebarMenu flex={1} />
+          <SidebarMenu flex={1} />{" "}
           <Container maxW="80%">
             <Heading marginBottom="8" marginTop="8">
-              Cancelled By User Orders
+              Data Event
             </Heading>
-            {TableOrders(1)}
+            <TableEvent />
           </Container>
         </Flex>
       </main>
@@ -24,4 +23,4 @@ function CancelByUser() {
   );
 }
 
-export default withAuth(CancelByUser);
+export default withAuth(Event);

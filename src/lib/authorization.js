@@ -14,12 +14,12 @@ export function withAuth(Component) {
     useEffect(() => {
       const token = localStorage.getItem("token");
       if (!token) {
-        router.push("/admin/login");
+        router.push("/login");
       } else {
         try {
           const payload = jwtDecode(token);
-          if (!payload.rows || payload.rows.length === 0) {
-            router.push("/admin/login");
+          if (!payload.id_user) {
+            router.push("/login");
           } else if (payload.exp < Date.now() / 1000) {
             console.log("waktu habis");
             toast({
@@ -28,13 +28,13 @@ export function withAuth(Component) {
               position: "bottom-right",
               isClosable: true,
             });
-            router.push("/admin/login");
+            router.push("/login");
           } else {
             setUserData(payload);
           }
         } catch (error) {
           console.error("Error decoding token:", error);
-          router.push("/admin/login");
+          router.push("/login");
         }
       }
     }, [router]);

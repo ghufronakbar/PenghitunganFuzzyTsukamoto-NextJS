@@ -1,7 +1,6 @@
-import { HeadAdmin } from "@/components/HeadAdmin";
+import { HeadAdmin } from "@/components/HeadApp";
 import { SidebarMenu } from "@/components/SidebarOrganization";
-import { FormEventScan } from "@/components/form/FormEventScan";
-
+import { FormEventAdd } from "@/components/form/FormEventAdd";
 import { withAuth } from "@/lib/authorization";
 import { Container, Flex } from "@chakra-ui/react";
 
@@ -12,8 +11,8 @@ function MenuAdd() {
       <main>
         <Flex>
           <SidebarMenu flex={1} />{" "}
-          <Container maxW="80%">            
-            <FormEventScan/>
+          <Container maxW="80%">
+            <FormEventAdd />
           </Container>
         </Flex>
       </main>

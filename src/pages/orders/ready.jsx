@@ -1,11 +1,10 @@
-import { HeadAdmin } from "@/components/HeadAdmin";
+import { HeadAdmin } from "@/components/HeadApp";
 import { SidebarMenu } from "@/components/SidebarOrganization";
-import { TableOrders } from "@/components/table/TableOrders";
+import { TableHistory } from "@/components/table/TableHistory";
 import { withAuth } from "@/lib/authorization";
-
 import { Container, Flex, Heading } from "@chakra-ui/react";
 
-function Process() {
+function Ready() {
   return (
     <>
       <HeadAdmin />
@@ -14,9 +13,9 @@ function Process() {
           <SidebarMenu flex={1} />
           <Container maxW="80%">
             <Heading marginBottom="8" marginTop="8">
-              Process Orders
+              Ready Orders
             </Heading>
-            {TableOrders(4)}
+            {TableHistory(5)}
           </Container>
         </Flex>
       </main>
@@ -24,4 +23,4 @@ function Process() {
   );
 }
 
-export default withAuth(Process);
+export default withAuth(Ready);

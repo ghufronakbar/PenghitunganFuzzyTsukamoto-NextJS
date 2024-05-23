@@ -6,9 +6,17 @@ const formatDate = (dateString) => {
     const dayName = days[date.getUTCDay()];
     const day = date.getUTCDate();
     const monthName = months[date.getUTCMonth()];
-    const year = date.getUTCFullYear();
+    const year = date.getUTCFullYear();    
     
     return `${dayName}, ${day} ${monthName} ${year}`;
   }
-
-export default formatDate
+  const formatTime = (timeString) => {
+    const date = new Date(timeString);
+    
+    const hour = date.getUTCHours()
+    const minute = date.getUTCMinutes()
+    const seconds = date.getUTCSeconds()
+    
+    return `${hour}:${minute}:${seconds}`;
+  }
+module.exports = {formatDate,formatTime}

@@ -1,11 +1,9 @@
 import axios from 'axios';
-import { baseUrlApi } from './baseUrlApi';
 
 const axiosInstanceAuthorization = axios.create({
-  baseURL: `${baseUrlApi}`
+  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api/user`
 });
 
-// Tambahkan interceptor untuk menambahkan Bearer token
 axiosInstanceAuthorization.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
