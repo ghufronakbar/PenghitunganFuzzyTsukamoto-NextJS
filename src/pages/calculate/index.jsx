@@ -16,7 +16,7 @@ function MenuAdd() {
           <SidebarMenu flex={1} />{" "}
           <Container maxW="80%">
            
-              <Heading my={8}>Calculate With Fuzzy Tsukamoto</Heading>
+              <Heading my={8}>Kalkulasi Dengan Fuzzy Tsukamoto</Heading>
               <ShowRulesImage />
               <ShowRulesText/>
               <FormCalculate />

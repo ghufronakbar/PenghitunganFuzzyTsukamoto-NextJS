@@ -111,14 +111,14 @@ export function DetailProfile() {
                 />
               </FormControl>
               <FormControl my={6}>
-                <FormLabel>Fullname</FormLabel>
+                <FormLabel>Nama</FormLabel>
                 <Input
                   value={fullname}
                   onChange={(e) => setFullname(e.target.value)}
                 />
               </FormControl>
               <VStack>
-                <Button onClick={handleUpdateProfile}>Update Profile</Button>
+                <Button onClick={handleUpdateProfile}>Perbarui Profile</Button>
               </VStack>
             </form>
           </Box>
@@ -132,7 +132,7 @@ export function DetailProfile() {
           >
             <form>
               <FormControl my={6}>
-                <FormLabel>Old Password</FormLabel>
+                <FormLabel>Password Lama</FormLabel>
                 <Input
                   type="password"
                   value={oldPassword}
@@ -140,7 +140,7 @@ export function DetailProfile() {
                 />
               </FormControl>
               <FormControl my={6}>
-                <FormLabel>New Password</FormLabel>
+                <FormLabel>Password Baru</FormLabel>
                 <Input
                   type="password"
                   value={newPassword}
@@ -148,7 +148,7 @@ export function DetailProfile() {
                 />
               </FormControl>
               <FormControl my={6}>
-                <FormLabel>Confirmation Password</FormLabel>
+                <FormLabel>Konfrimasi Password</FormLabel>
                 <Input
                   type="password"
                   value={confirmationPassword}
@@ -156,7 +156,7 @@ export function DetailProfile() {
                 />
               </FormControl>
               <VStack>
-                <Button onClick={handleUpdatePassword}>Update Password</Button>
+                <Button onClick={handleUpdatePassword}>Perbarui Password</Button>
               </VStack>
             </form>
           </Box>

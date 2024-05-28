@@ -27,10 +27,16 @@ import {
 import axiosInstanceAuthorization from "../../lib/axiosInstanceAuthorization";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loading } from "../Loading";
-import { primaryColor, secondaryColor, white } from "@/lib/color";
+import {
+  primaryColor,
+  primaryColor2,
+  secondaryColor,
+  white,
+} from "@/lib/color";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { formatDate, formatTime } from "@/lib/formatDate";
+import { formatDecimal } from "@/lib/formatDecimal";
 
 export function TableHistory() {
   const toast = useToast();
@@ -39,8 +45,6 @@ export function TableHistory() {
   const [isRejectOpen, setIsRejectOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isResultOpen, setIsResultOpen] = useState(false);
-
-  const queryClient = useQueryClient();
 
   const {
     data: dataHistory,
@@ -131,8 +135,8 @@ export function TableHistory() {
   };
 
   const ModalResult = () => {
-    if (isLoadingId) return <Loading />;    
-
+    if (isLoadingId) return <Loading />;
+  
     return (
       <>
         <Modal
@@ -142,7 +146,7 @@ export function TableHistory() {
         >
           <ModalOverlay />
           <ModalContent align="center">
-            <ModalHeader>Total Ice Cube Production</ModalHeader>
+            <ModalHeader>Total Produksi Es Batu</ModalHeader>
             <ModalCloseButton />
             <ModalBody
               align-items="center"
@@ -158,106 +162,115 @@ export function TableHistory() {
                 <TableContainer>
                   <Thead>
                     <Tr>
-                      <Th>Variable</Th>
-                      <Th>Value</Th>
-                      <Th>Degree of Group</Th>
+                      <Th>Variabel</Th>
+                      <Th>Nilai</Th>
+                      <Th>Derajat Keanggotaan</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
                     <Tr>
-                      <Td>Supply</Td>
+                      <Td>Persediaan</Td>
                       <Td>{dataHistoryId?.persediaan}</Td>
                       <Td>
-                        <Center>
-                          {dataHistoryId?.derajat_keanggotaan_persediaan ==
-                          0 ? (
-                            <Box
-                              as="button"
-                              borderRadius="md"
-                              bg={secondaryColor}
-                              color={white}
-                              px={4}
-                              h={8}
-                            >
-                              A Little
-                            </Box>
-                          ) : (
-                            <Box
-                              as="button"
-                              borderRadius="md"
-                              bg={primaryColor}
-                              color={white}
-                              px={4}
-                              h={8}
-                            >
-                              A Lot
-                            </Box>
+                        <Box
+                          as="button"
+                          bg={primaryColor2}
+                          color={white}
+                          px={4}
+                          py={2}
+                          borderRadius={20}
+                        >
+                          Sedikit (
+                          {formatDecimal(
+                            dataHistoryId?.derajat_keanggotaan_persediaan
                           )}
-                        </Center>
+                          ){" "}
+                        </Box>{" "}
+                        <Box
+                          as="button"
+                          bg={secondaryColor}
+                          color={white}
+                          px={4}
+                          py={2}
+                          borderRadius={20}
+                        >
+                          Banyak (
+                          {
+                            formatDecimal(1 -
+                              dataHistoryId?.derajat_keanggotaan_persediaan
+                            )}
+                          ){" "}
+                        </Box>
                       </Td>
                     </Tr>
                     <Tr>
-                      <Td>Demand</Td>
+                      <Td>Permintaan</Td>
                       <Td>{dataHistoryId?.permintaan}</Td>
                       <Td>
-                        <Center>
-                          {" "}
-                          {dataHistoryId?.derajat_keanggotaan_permintaan ==
-                          0 ? (
-                            <Box
-                              as="button"
-                              borderRadius="md"
-                              bg={secondaryColor}
-                              color={white}
-                              px={4}
-                              h={8}
-                            >
-                              A Little
-                            </Box>
-                          ) : (
-                            <Box
-                              as="button"
-                              borderRadius="md"
-                              bg={primaryColor}
-                              color={white}
-                              px={4}
-                              h={8}
-                            >
-                              A Lot
-                            </Box>
+                        <Box
+                          as="button"
+                          bg={primaryColor2}
+                          color={white}
+                          px={4}
+                          py={2}
+                          borderRadius={20}
+                        >
+                          Sedikit (
+                          {formatDecimal(
+                            dataHistoryId?.derajat_keanggotaan_permintaan
                           )}
-                        </Center>
+                          ){" "}
+                        </Box>{" "}
+                        <Box
+                          as="button"
+                          bg={secondaryColor}
+                          color={white}
+                          px={4}
+                          py={2}
+                          borderRadius={20}
+                        >
+                          Banyak (
+                          {
+                            formatDecimal(1 -
+                              dataHistoryId?.derajat_keanggotaan_permintaan
+                            )}
+                          ){" "}
+                        </Box>
                       </Td>
                     </Tr>
                     <Tr>
-                      <Td>Ice Cube Production</Td>
-                      <Td>{dataHistoryId?.produksi}</Td>
+                      <Td>Produksi Es Batu</Td>
+                      <Td>{formatDecimal(dataHistoryId?.produksi)}</Td>
                       <Td>
-                        <Center>
-                          {dataHistoryId?.derajat_keanggotaan_produksi == 0 ? (
-                            <Box
-                              as="button"
-                              borderRadius="md"
-                              bg={secondaryColor}
-                              color={white}
-                              px={4}
-                              h={8}
-                            >
-                              A Little
-                            </Box>
-                          ) : (
-                            <Box
-                              as="button"
-                              borderRadius="md"
-                              bg={primaryColor}
-                              color={white}
-                              px={4}
-                              h={8}
-                            >
-                              A Lot
-                            </Box>
+                        <Box
+                          as="button"
+                          bg={primaryColor2}
+                          color={white}
+                          px={4}
+                          py={2}
+                          borderRadius={20}
+                        >
+                          Sedikit (
+                          {formatDecimal(
+                            dataHistoryId?.derajat_keanggotaan_produksi
                           )}
-                        </Center>{" "}
+                          ){" "}
+                        </Box>{" "}
+                        <Box
+                          as="button"
+                          bg={secondaryColor}
+                          color={white}
+                          px={4}
+                          py={2}
+                          borderRadius={20}
+                        >
+                          Banyak (
+                          {
+                            formatDecimal(1 -
+                              dataHistoryId?.derajat_keanggotaan_produksi
+                            )}
+                          ){" "}
+                        </Box>
                       </Td>
                     </Tr>
                   </Tbody>
@@ -268,9 +281,9 @@ export function TableHistory() {
                   <Thead>
                     <Tr>
                       <Th>Rule</Th>
-                      <Th>Conditons</Th>
-                      <Th>Degree of Supply</Th>
-                      <Th>Degree of Demand</Th>
+                      <Th>Kondisi</Th>
+                      <Th>Derajat Persediaan</Th>
+                      <Th>Derajat Permintaan</Th>
                       <Th>(αi)</Th>
                       <Th>Zi</Th>
                       <Th>αi×Zi</Th>
@@ -280,56 +293,55 @@ export function TableHistory() {
                     <Tr>
                       <Td>R1</Td>
                       <Td>
-                        If There is <Text as="b">Little</Text> Supply and{" "}
-                        <Text as="b">Little</Text> Demand Then{" "}
-                        <Text as="b">Little</Text> Production
+                        Jika ada <Text as="b">Sedikit</Text> Persediaan dan{" "}
+                        <Text as="b">Sedikit</Text> Permintaan Maka{" "}
+                        <Text as="b">Sedikit</Text> Produksi
                       </Td>
-                      <Td>{dataHistoryId?.r1_derajat_persediaan}</Td>
-                      <Td>{dataHistoryId?.r1_derajat_permintaan}</Td>
-                      <Td>{dataHistoryId?.r1_alpha}</Td>
-                      <Td>{dataHistoryId?.r1_z1}</Td>
-                      <Td>{dataHistoryId?.r1_aixzi}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r1_derajat_persediaan)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r1_derajat_permintaan)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r1_alpha)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r1_z1)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r1_aixzi)}</Td>
                     </Tr>
                     <Tr>
                       <Td>R2</Td>
                       <Td>
-                        If There is <Text as="b">Little</Text> Supply and{" "}
-                        <Text as="b">Lot</Text> Demand Then{" "}
-                        <Text as="b">Lot</Text> Production
+                        Jika ada <Text as="b">Sedikit</Text> Persediaan dan{" "}
+                        <Text as="b">Banyak</Text> Permintaan Maka{" "}
+                        <Text as="b">Banyak</Text> Produksi
                       </Td>
-                      <Td>{dataHistoryId?.r2_derajat_persediaan}</Td>
-                      <Td>{dataHistoryId?.r2_derajat_permintaan}</Td>
-                      <Td>{dataHistoryId?.r2_alpha}</Td>
-                      <Td>{dataHistoryId?.r2_z1}</Td>
-                      <Td>{dataHistoryId?.r2_aixzi}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r2_derajat_persediaan)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r2_derajat_permintaan)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r2_alpha)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r2_z1)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r2_aixzi)}</Td>
                     </Tr>
                     <Tr>
                       <Td>R3</Td>
                       <Td>
-                        If There is <Text as="b">Lot</Text> Supply and{" "}
-                        <Text as="b">Little</Text> Demand Then{" "}
-                        <Text as="b">Little</Text> Production
+                        Jika ada <Text as="b">Banyak</Text> Persediaan dan{" "}
+                        <Text as="b">Sedikit</Text> Permintaan Maka{" "}
+                        <Text as="b">Sedikit</Text> Produksi
                       </Td>
-                      <Td>{dataHistoryId?.r3_derajat_persediaan}</Td>
-                      <Td>{dataHistoryId?.r3_derajat_permintaan}</Td>
-                      <Td>{dataHistoryId?.r3_alpha}</Td>
-                      <Td>{dataHistoryId?.r3_z1}</Td>
-                      <Td>{dataHistoryId?.r3_aixzi}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r3_derajat_persediaan)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r3_derajat_permintaan)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r3_alpha)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r3_z1)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r3_aixzi)}</Td>
                     </Tr>
                     <Tr>
                       <Td>R4</Td>
                       <Td>
-                        If There is <Text as="b">Lot</Text> Supply and{" "}
-                        <Text as="b">Lot</Text> Demand Then{" "}
-                        <Text as="b">Lot</Text> Production
+                        Jika ada <Text as="b">Banyak</Text> Persediaan dan{" "}
+                        <Text as="b">Banyak</Text> Permintaan Maka{" "}
+                        <Text as="b">Banyak</Text> Produksi
                       </Td>
-                      <Td>{dataHistoryId?.r4_derajat_persediaan}</Td>
-                      <Td>{dataHistoryId?.r4_derajat_permintaan}</Td>
-                      <Td>{dataHistoryId?.r4_alpha}</Td>
-                      <Td>{dataHistoryId?.r4_z1}</Td>
-                      <Td>{dataHistoryId?.r4_aixzi}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r4_derajat_persediaan)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r4_derajat_permintaan)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r4_alpha)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r4_z1)}</Td>
+                      <Td>{formatDecimal(dataHistoryId?.r4_aixzi)}</Td>
                     </Tr>
-
                     <Tr>
                       <Td>
                         <Text as="b">Total</Text>
@@ -340,15 +352,15 @@ export function TableHistory() {
                       <Td></Td>
                       <Td></Td>
                       <Td>
-                        <Text as="b">{dataHistoryId?.produksi_es_batu}</Text>
+                        <Text as="b">{formatDecimal(dataHistoryId?.produksi_es_batu)}</Text>
                       </Td>
                     </Tr>
                   </Tbody>
                   <TableCaption>
                     <HStack>
-                      <Text as="b"> Ice Cube Production</Text>
+                      <Text as="b"> Produksi Es Batu</Text>
                       <Text>= ∑(αi×Zi) / ∑(αi) = 450 / 1 =</Text>
-                      <Text as="b"> {parseFloat(dataHistoryId?.produksi)}</Text>
+                      <Text as="b"> {formatDecimal(dataHistoryId?.produksi)}</Text>
                     </HStack>
                   </TableCaption>
                 </TableContainer>
@@ -367,7 +379,7 @@ export function TableHistory() {
                       setIsResultOpen(false);
                     }}
                   >
-                    Close
+                    Tutup
                   </Button>
                 </Center>
               </VStack>
@@ -377,9 +389,8 @@ export function TableHistory() {
       </>
     );
   };
-
+  
   if (isLoading) return <Loading />;
-
 
   return (
     <>
@@ -397,10 +408,10 @@ export function TableHistory() {
             <Thead>
               <Tr>
                 <Th>No</Th>
-                <Th>Supply</Th>
-                <Th>Demand</Th>
-                <Th>Production</Th>
-                <Th>Input At</Th>
+                <Th>Persediaan</Th>
+                <Th>Permintaan</Th>
+                <Th>Produksi</Th>
+                <Th>Waktu</Th>
                 <Th></Th>
               </Tr>
             </Thead>
@@ -410,13 +421,13 @@ export function TableHistory() {
                   <Tr key={item.id_calculate}>
                     <Td>{index + 1}</Td>
                     <Td>
-                      <Text>{item.persediaan}</Text>
+                      <Text>{formatDecimal(item.persediaan)}</Text>
                     </Td>
                     <Td>
-                      <Text>{item.permintaan}</Text>
+                      <Text>{formatDecimal(item.permintaan)}</Text>
                     </Td>
                     <Td>
-                      <Text>{item.produksi}</Text>
+                      <Text>{formatDecimal(item.produksi)}</Text>
                     </Td>
                     <Td>
                       <Text>{formatDate(item.datetime)}</Text>
@@ -442,7 +453,7 @@ export function TableHistory() {
                         bg="red"
                         mx={2}
                       >
-                        Delete
+                        Hapus
                       </Button>
                     </Td>
                   </Tr>

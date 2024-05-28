@@ -47,8 +47,8 @@ export function SidebarMenu() {
           <br />
           <br />
           <Menu>
-            <MenuItem onClick={() => router.push(`/calculate`)}>🧮 Calculate</MenuItem>
-            <MenuItem onClick={() => router.push(`/history`)}>📒 History</MenuItem>           
+            <MenuItem onClick={() => router.push(`/calculate`)}>🧮 Kalkulasi</MenuItem>
+            <MenuItem onClick={() => router.push(`/history`)}>📒 Riwayat</MenuItem>           
             <MenuItem onClick={handleLogout}>🔒 Logout</MenuItem>
           </Menu>
         </Sidebar>

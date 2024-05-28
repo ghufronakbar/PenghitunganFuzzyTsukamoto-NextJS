@@ -29,7 +29,7 @@ const ShowRulesImage = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Group of Function Supply</ModalHeader>
+          <ModalHeader>Fungsi Keanggotaan Persediaan</ModalHeader>
           <ModalBody>
             <Image
               src="/fungsipersediaan.png"
@@ -64,7 +64,7 @@ const ShowRulesImage = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Group of Function Demand</ModalHeader>
+          <ModalHeader>Fungsi Keanggotaan Permintaan</ModalHeader>
           <ModalBody>
             <Image
               src="/fungsipermintaan.png"
@@ -99,7 +99,7 @@ const ShowRulesImage = () => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Group of Function Production</ModalHeader>
+          <ModalHeader>Fungsi Keanggotaan Produksi</ModalHeader>
           <ModalBody>
             <Image
               src="/fungsiproduksi.png"
@@ -147,7 +147,7 @@ const ShowRulesImage = () => {
             }}
           >
             <Center>
-              <Text as="b">Group of Function Supply</Text>
+              <Text as="b">Fungsi Keanggotaan Persediaan</Text>
               <Image
                 src="/persediaan.png"
                 alt="persediaan"
@@ -167,7 +167,7 @@ const ShowRulesImage = () => {
             }}
           >
             <Center>
-              <Text as="b">Group of Function Demand</Text>
+              <Text as="b">Fungsi Keanggotaan Permintaan</Text>
               <Image
                 src="/permintaan.png"
                 alt="permintaan"
@@ -187,7 +187,7 @@ const ShowRulesImage = () => {
             }}
           >
             <Center>
-              <Text as="b">Group of Function Production</Text>
+              <Text as="b">Fungsi Keanggotaan Produksi</Text>
               <Image
                 src="/produksi.png"
                 alt="produksi"

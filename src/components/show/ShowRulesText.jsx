@@ -25,40 +25,40 @@ const ShowRulesText = () => {
         mt={4}
       >
         <Text fontSize="xl" as="b">
-          Rules that are used:{" "}
+         Aturan yang digunakan
         </Text>
         <Table mt={4}>
           <Thead>
             <Tr>
               <Th>R1</Th>
               <Td>
-                If There is <Text as="b">Little</Text> Supply and{" "}
-                <Text as="b">Little</Text> Demand Then{" "}
-                <Text as="b">Little</Text> Production
+                Jika ada <Text as="b">Sedikit</Text> Persediaan dan{" "}
+                <Text as="b">Sedikit</Text> Permintaan Maka{" "}
+                <Text as="b">Sedikit</Text> Produksi
               </Td>
             </Tr>
             <Tr>
               <Th>R2</Th>
               <Td>
-                If There is <Text as="b">Little</Text> Supply and{" "}
-                <Text as="b">Lot</Text> Demand Then <Text as="b">Lot</Text>{" "}
-                Production
+                Jika ada <Text as="b">Sedikit</Text> Persediaan dan{" "}
+                <Text as="b">Banyak</Text> Permintaan Maka{" "}
+                <Text as="b">Banyak</Text> Produksi
               </Td>
             </Tr>
             <Tr>
               <Th>R3</Th>
               <Td>
-                If There is <Text as="b">Lot</Text> Supply and{" "}
-                <Text as="b">Little</Text> Demand Then{" "}
-                <Text as="b">Little</Text> Production
+                Jika ada <Text as="b">Banyak</Text> Persediaan dan{" "}
+                <Text as="b">Sedikit</Text> Permintaan Maka{" "}
+                <Text as="b">Sedikit</Text> Produksi
               </Td>
             </Tr>
             <Tr>
               <Th>R4</Th>
               <Td>
-                If There is <Text as="b">Lot</Text> Supply and{" "}
-                <Text as="b">Lot</Text> Demand Then <Text as="b">Lot</Text>{" "}
-                Production
+                Jika ada <Text as="b">Banyak</Text> Persediaan dan{" "}
+                <Text as="b">Banyak</Text> Permintaan Maka{" "}
+                <Text as="b">Banyak</Text> Produksi
               </Td>
             </Tr>
           </Thead>

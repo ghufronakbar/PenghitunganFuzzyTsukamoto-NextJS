@@ -35,7 +35,9 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { Loading } from "../Loading";
 import axiosInstanceAuthorization from "@/lib/axiosInstanceAuthorization";
-import { primaryColor, secondaryColor, white } from "@/lib/color";
+import { primaryColor, primaryColor2, secondaryColor, white } from "@/lib/color";
+import { formatDecimal } from "@/lib/formatDecimal";
+import { formatDate } from "@/lib/formatDate";
 
 export function FormCalculate() {
   const router = useRouter();
@@ -86,7 +88,7 @@ export function FormCalculate() {
     try {
       if (!(inputPersediaan && inputPermintaan)) {
         toast({
-          title: "Complete field to calculate",
+          title: "Isi untuk melakukan kalkulasi",
           status: "warning",
           position: "bottom-right",
           isClosable: true,
@@ -98,7 +100,7 @@ export function FormCalculate() {
         permintaan: inputPermintaan,
       });
       toast({
-        title: "Success calculating",
+        title: "Success mengkalkulasi",
         status: "success",
         position: "bottom-right",
         isClosable: true,
@@ -164,7 +166,7 @@ export function FormCalculate() {
       setValueDatetime(datetime);
       setIsResultOpen(true);
     } catch (error) {
-      let errorMessage = "Error while calculating";
+      let errorMessage = "Error ketika mengkalkulasi";
       if (
         error.response &&
         error.response.data &&
@@ -181,246 +183,232 @@ export function FormCalculate() {
     }
   };
 
-  const ModalResult = () => {
-    return (
-      <Modal
-        size="full"
-        isOpen={isResultOpen}
-        onClose={() => setIsResultOpen(false)}
-      >
-        <ModalOverlay />
-        <ModalContent align="center">
-          <ModalHeader>Total Ice Cube Production</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody
-            align-items="center"
-            justify-content="center"
-            direction="horizontal"
-          >
-            <Table
-              variant="striped"
-              overflow="auto"
-              align="center"
-              objectFit="contain"
-            >
-              <TableContainer>
-                <Thead>
-                  <Tr>
-                    <Th>Variable</Th>
-                    <Th>Value</Th>
-                    <Th>Degree of Group</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  <Tr>
-                    <Td>Supply</Td>
-                    <Td>{valuePersediaan}</Td>
-                    <Td>
-                      <Center>
-                        {valueDerajatKeanggotaanPersediaan == 0 ? (
-                          <Box
-                            as="button"
-                            borderRadius="md"
-                            bg={secondaryColor}
-                            color={white}
-                            px={4}
-                            h={8}
-                          >
-                            A Little
-                          </Box>
-                        ) : (
-                          <Box
-                            as="button"
-                            borderRadius="md"
-                            bg={primaryColor}
-                            color={white}
-                            px={4}
-                            h={8}
-                          >
-                            A Lot
-                          </Box>
-                        )}
-                      </Center>
-                    </Td>
-                  </Tr>
-                  <Tr>
-                    <Td>Demand</Td>
-                    <Td>{valuePermintaan}</Td>
-                    <Td>
-                      <Center>
-                        {valueDerajatKeanggotaanPermintaan == 0 ? (
-                          <Box
-                            as="button"
-                            borderRadius="md"
-                            bg={secondaryColor}
-                            color={white}
-                            px={4}
-                            h={8}
-                          >
-                            A Little
-                          </Box>
-                        ) : (
-                          <Box
-                            as="button"
-                            borderRadius="md"
-                            bg={primaryColor}
-                            color={white}
-                            px={4}
-                            h={8}
-                          >
-                            A Lot
-                          </Box>
-                        )}
-                      </Center>
-                    </Td>
-                  </Tr>
-                  <Tr>
-                    <Td>Ice Cube Production</Td>
-                    <Td>{valueProduksi}</Td>
-                    <Td>
-                      <Center>
-                        {valueDerajatKeanggotaanProduksi == 0 ? (
-                          <Box
-                            as="button"
-                            borderRadius="md"
-                            bg={secondaryColor}
-                            color={white}
-                            px={4}
-                            h={8}
-                          >
-                            A Little
-                          </Box>
-                        ) : (
-                          <Box
-                            as="button"
-                            borderRadius="md"
-                            bg={primaryColor}
-                            color={white}
-                            px={4}
-                            h={8}
-                          >
-                            A Lot
-                          </Box>
-                        )}
-                      </Center>
-                    </Td>
-                  </Tr>
-                </Tbody>
-              </TableContainer>
-            </Table>
-            <Table mt={6} variant="striped" overflow="auto" size="sm">
-              <TableContainer>
-                <Thead>
-                  <Tr>
-                    <Th>Rule</Th>
-                    <Th>Conditons</Th>
-                    <Th>Degree of Supply</Th>
-                    <Th>Degree of Demand</Th>
-                    <Td>(αi)</Td>
-                    <Td>Zi</Td>
-                    <Td>αi×Zi</Td>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  <Tr>
-                    <Td>R1</Td>
-                    <Td>
-                      If There is <Text as="b">Little</Text> Supply and{" "}
-                      <Text as="b">Little</Text> Demand Then{" "}
-                      <Text as="b">Little</Text> Production
-                    </Td>
-                    <Td>{valueR1DerajatPersediaan}</Td>
-                    <Td>{valueR1DerajatPermintaan}</Td>
-                    <Td>{valueR1Alpha}</Td>
-                    <Td>{valueR1Zi}</Td>
-                    <Td>{valueR1Aixzi}</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>R2</Td>
-                    <Td>
-                      If There is <Text as="b">Little</Text> Supply and{" "}
-                      <Text as="b">Lot</Text> Demand Then{" "}
-                      <Text as="b">Lot</Text> Production
-                    </Td>
-                    <Td>{valueR2DerajatPersediaan}</Td>
-                    <Td>{valueR2DerajatPermintaan}</Td>
-                    <Td>{valueR2Alpha}</Td>
-                    <Td>{valueR2Zi}</Td>
-                    <Td>{valueR2Aixzi}</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>R3</Td>
-                    <Td>
-                      If There is <Text as="b">Lot</Text> Supply and{" "}
-                      <Text as="b">Little</Text> Demand Then{" "}
-                      <Text as="b">Little</Text> Production
-                    </Td>
-                    <Td>{valueR3DerajatPersediaan}</Td>
-                    <Td>{valueR3DerajatPermintaan}</Td>
-                    <Td>{valueR3Alpha}</Td>
-                    <Td>{valueR3Zi}</Td>
-                    <Td>{valueR3Aixzi}</Td>
-                  </Tr>
-                  <Tr>
-                    <Td>R4</Td>
-                    <Td>
-                      If There is <Text as="b">Lot</Text> Supply and{" "}
-                      <Text as="b">Lot</Text> Demand Then{" "}
-                      <Text as="b">Lot</Text> Production
-                    </Td>
-                    <Td>{valueR4DerajatPersediaan}</Td>
-                    <Td>{valueR4DerajatPermintaan}</Td>
-                    <Td>{valueR4Alpha}</Td>
-                    <Td>{valueR4Zi}</Td>
-                    <Td>{valueR4Aixzi}</Td>
-                  </Tr>
 
-                  <Tr>
-                    <Td>
-                      <Text as="b">Total</Text>
-                    </Td>
-                    <Td></Td>
-                    <Td></Td>
-                    <Td></Td>
-                    <Td></Td>
-                    <Td></Td>
-                    <Td>
-                      <Text as="b">{valueProduksiEsBatu}</Text>
-                    </Td>
-                  </Tr>
-                </Tbody>
-                <TableCaption>
-                  <HStack>
-                    <Text as="b"> Ice Cube Production</Text>
-                    <Text>= ∑(αi×Zi) / ∑(αi) = 450 / 1 =</Text>
-                    <Text as="b"> {parseFloat(valueProduksi)}</Text>
-                  </HStack>
-                </TableCaption>
-              </TableContainer>
-            </Table>
-          </ModalBody>
-          <ModalFooter>
-            <VStack>
-              <Center>
-                <Button
-                  bg={primaryColor}
-                  color={white}
-                  my={4}
-                  alignContent="center"
-                  alignItems="center"
-                  onClick={() => {
-                    setIsResultOpen(false);
-                  }}
-                >
-                  Close
-                </Button>
-              </Center>
-            </VStack>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    );
-  };
+const ModalResult = () => {
+  return (
+    <Modal
+      size="full"
+      isOpen={isResultOpen}
+      onClose={() => setIsResultOpen(false)}
+    >
+      <ModalOverlay />
+      <ModalContent align="center">
+        <ModalHeader>Total Produksi Es Batu</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody
+          align-items="center"
+          justify-content="center"
+          direction="horizontal"
+        >
+          <Table
+            variant="striped"
+            overflow="auto"
+            align="center"
+            objectFit="contain"
+          >
+            <TableContainer>
+              <Thead>
+                <Tr>
+                  <Th>Variabel</Th>
+                  <Th>Nilai</Th>
+                  <Th>Derajat Keanggotaan</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                <Tr>
+                  <Td>Persediaan</Td>
+                  <Td>{formatDecimal(valuePersediaan)}</Td>
+                  <Td>
+                    <Box
+                      as="button"
+                      bg={primaryColor2}
+                      color={white}
+                      px={4}
+                      py={2}
+                      borderRadius={20}
+                    >
+                      Sedikit ({formatDecimal(valueDerajatKeanggotaanPersediaan)}){" "}
+                    </Box>{" "}
+                    <Box
+                      as="button"
+                      bg={secondaryColor}
+                      color={white}
+                      px={4}
+                      py={2}
+                      borderRadius={20}
+                    >
+                      Banyak ({formatDecimal(1 - valueDerajatKeanggotaanPersediaan)}){" "}
+                    </Box>
+                  </Td>
+                </Tr>
+                <Tr>
+                  <Td>Permintaan</Td>
+                  <Td>{formatDecimal(valuePermintaan)}</Td>
+                  <Td>
+                    <Box
+                      as="button"
+                      bg={primaryColor2}
+                      color={white}
+                      px={4}
+                      py={2}
+                      borderRadius={20}
+                    >
+                      Sedikit ({formatDecimal(valueDerajatKeanggotaanPermintaan)}){" "}
+                    </Box>{" "}
+                    <Box
+                      as="button"
+                      bg={secondaryColor}
+                      color={white}
+                      px={4}
+                      py={2}
+                      borderRadius={20}
+                    >
+                      Banyak ({ formatDecimal(1 -valueDerajatKeanggotaanPermintaan)}){" "}
+                    </Box>
+                  </Td>
+                </Tr>
+                <Tr>
+                  <Td>Produksi Es Batu</Td>
+                  <Td>{formatDecimal(valueProduksi)}</Td>
+                  <Td>
+                    <Box
+                      as="button"
+                      bg={primaryColor2}
+                      color={white}
+                      px={4}
+                      py={2}
+                      borderRadius={20}
+                    >
+                      Sedikit ({formatDecimal(valueDerajatKeanggotaanProduksi)}){" "}
+                    </Box>{" "}
+                    <Box
+                      as="button"
+                      bg={secondaryColor}
+                      color={white}
+                      px={4}
+                      py={2}
+                      borderRadius={20}
+                    >
+                      Banyak ({formatDecimal(1 - valueDerajatKeanggotaanProduksi)}){" "}
+                    </Box>
+                  </Td>
+                </Tr>
+              </Tbody>
+            </TableContainer>
+          </Table>
+          <Table mt={6} variant="striped" overflow="auto" size="sm">
+            <TableContainer>
+              <Thead>
+                <Tr>
+                  <Th>Rule</Th>
+                  <Th>Kondisi</Th>
+                  <Th>Derajat Persediaan</Th>
+                  <Th>Derajat Permintaan</Th>
+                  <Td>(αi)</Td>
+                  <Td>Zi</Td>
+                  <Td>αi×Zi</Td>
+                </Tr>
+              </Thead>
+              <Tbody>
+                <Tr>
+                  <Td>R1</Td>
+                  <Td>
+                    Jika ada <Text as="b">Sedikit</Text> Persediaan dan{" "}
+                    <Text as="b">Sedikit</Text> Permintaan Maka{" "}
+                    <Text as="b">Sedikit</Text> Produksi
+                  </Td>
+                  <Td>{formatDecimal(valueR1DerajatPersediaan)}</Td>
+                  <Td>{formatDecimal(valueR1DerajatPermintaan)}</Td>
+                  <Td>{formatDecimal(valueR1Alpha)}</Td>
+                  <Td>{formatDecimal(valueR1Zi)}</Td>
+                  <Td>{formatDecimal(valueR1Aixzi)}</Td>
+                </Tr>
+                <Tr>
+                  <Td>R2</Td>
+                  <Td>
+                    Jika ada <Text as="b">Sedikit</Text> Persediaan dan{" "}
+                    <Text as="b">Banyak</Text> Permintaan Maka{" "}
+                    <Text as="b">Banyak</Text> Produksi
+                  </Td>
+                  <Td>{formatDecimal(valueR2DerajatPersediaan)}</Td>
+                  <Td>{formatDecimal(valueR2DerajatPermintaan)}</Td>
+                  <Td>{formatDecimal(valueR2Alpha)}</Td>
+                  <Td>{formatDecimal(valueR2Zi)}</Td>
+                  <Td>{formatDecimal(valueR2Aixzi)}</Td>
+                </Tr>
+                <Tr>
+                  <Td>R3</Td>
+                  <Td>
+                    Jika ada <Text as="b">Banyak</Text> Persediaan dan{" "}
+                    <Text as="b">Sedikit</Text> Permintaan Maka{" "}
+                    <Text as="b">Sedikit</Text> Produksi
+                  </Td>
+                  <Td>{formatDecimal(valueR3DerajatPersediaan)}</Td>
+                  <Td>{formatDecimal(valueR3DerajatPermintaan)}</Td>
+                  <Td>{formatDecimal(valueR3Alpha)}</Td>
+                  <Td>{formatDecimal(valueR3Zi)}</Td>
+                  <Td>{formatDecimal(valueR3Aixzi)}</Td>
+                </Tr>
+                <Tr>
+                  <Td>R4</Td>
+                  <Td>
+                    Jika ada <Text as="b">Banyak</Text> Persediaan dan{" "}
+                    <Text as="b">Banyak</Text> Permintaan Maka{" "}
+                    <Text as="b">Banyak</Text> Produksi
+                  </Td>
+                  <Td>{formatDecimal(valueR4DerajatPersediaan)}</Td>
+                  <Td>{formatDecimal(valueR4DerajatPermintaan)}</Td>
+                  <Td>{formatDecimal(valueR4Alpha)}</Td>
+                  <Td>{formatDecimal(valueR4Zi)}</Td>
+                  <Td>{formatDecimal(valueR4Aixzi)}</Td>
+                </Tr>
+                <Tr>
+                  <Td>
+                    <Text as="b">Total</Text>
+                  </Td>
+                  <Td></Td>
+                  <Td></Td>
+                  <Td></Td>
+                  <Td></Td>
+                  <Td></Td>
+                  <Td>
+                    <Text as="b">{formatDecimal(valueProduksiEsBatu)}</Text>
+                  </Td>
+                </Tr>
+              </Tbody>
+              <TableCaption>
+                <HStack>
+                  <Text as="b"> Produksi Es Batu</Text>
+                  <Text>= ∑(αi×Zi) / ∑(αi) = 450 / 1 =</Text>
+                  <Text as="b"> {formatDecimal(valueProduksi)}</Text>
+                </HStack>
+              </TableCaption>
+            </TableContainer>
+          </Table>
+        </ModalBody>
+        <ModalFooter>
+          <VStack>
+            <Center>
+              <Button
+                bg={primaryColor}
+                color={white}
+                my={4}
+                alignContent="center"
+                alignItems="center"
+                onClick={() => {
+                  setIsResultOpen(false);
+                }}
+              >
+                Tutup
+              </Button>
+            </Center>
+          </VStack>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  );
+};
+
 
   if (loading) return <Loading />;
 
@@ -439,7 +427,7 @@ export function FormCalculate() {
               <FormControl>
                 <Flex>
                   <Box flex="1" mr={2}>
-                    <FormLabel>Enter supply amount</FormLabel>
+                    <FormLabel>Masukkan persediaan</FormLabel>
                     <Input
                       name="persediaan"
                       value={inputPersediaan}
@@ -448,7 +436,7 @@ export function FormCalculate() {
                     />
                   </Box>
                   <Box flex="1" mr={2}>
-                    <FormLabel>Enter demand amount</FormLabel>
+                    <FormLabel>Masukkan permintaan</FormLabel>
                     <Input
                       name="permintaan"
                       value={inputPermintaan}
@@ -470,7 +458,7 @@ export function FormCalculate() {
               HandleCalculate();
             }}
           >
-            Calculate
+            Hitung
           </Button>
         </VStack>
       </form>
