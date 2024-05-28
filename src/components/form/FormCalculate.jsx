@@ -35,7 +35,12 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { Loading } from "../Loading";
 import axiosInstanceAuthorization from "@/lib/axiosInstanceAuthorization";
-import { primaryColor, primaryColor2, secondaryColor, white } from "@/lib/color";
+import {
+  primaryColor,
+  primaryColor2,
+  secondaryColor,
+  white,
+} from "@/lib/color";
 import { formatDecimal } from "@/lib/formatDecimal";
 import { formatDate } from "@/lib/formatDate";
 
@@ -183,232 +188,279 @@ export function FormCalculate() {
     }
   };
 
-
-const ModalResult = () => {
-  return (
-    <Modal
-      size="full"
-      isOpen={isResultOpen}
-      onClose={() => setIsResultOpen(false)}
-    >
-      <ModalOverlay />
-      <ModalContent align="center">
-        <ModalHeader>Total Produksi Es Batu</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody
-          align-items="center"
-          justify-content="center"
-          direction="horizontal"
-        >
-          <Table
-            variant="striped"
-            overflow="auto"
-            align="center"
-            objectFit="contain"
+  const ModalResult = () => {
+    return (
+      <Modal
+        size="full"
+        isOpen={isResultOpen}
+        onClose={() => setIsResultOpen(false)}
+      >
+        <ModalOverlay />
+        <ModalContent align="center">
+          <ModalHeader>Total Produksi Es Batu</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody
+            align-items="center"
+            justify-content="center"
+            direction="horizontal"
           >
-            <TableContainer>
-              <Thead>
-                <Tr>
-                  <Th>Variabel</Th>
-                  <Th>Nilai</Th>
-                  <Th>Derajat Keanggotaan</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td>Persediaan</Td>
-                  <Td>{formatDecimal(valuePersediaan)}</Td>
-                  <Td>
-                    <Box
-                      as="button"
-                      bg={primaryColor2}
-                      color={white}
-                      px={4}
-                      py={2}
-                      borderRadius={20}
-                    >
-                      Sedikit ({formatDecimal(valueDerajatKeanggotaanPersediaan)}){" "}
-                    </Box>{" "}
-                    <Box
-                      as="button"
-                      bg={secondaryColor}
-                      color={white}
-                      px={4}
-                      py={2}
-                      borderRadius={20}
-                    >
-                      Banyak ({formatDecimal(1 - valueDerajatKeanggotaanPersediaan)}){" "}
-                    </Box>
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>Permintaan</Td>
-                  <Td>{formatDecimal(valuePermintaan)}</Td>
-                  <Td>
-                    <Box
-                      as="button"
-                      bg={primaryColor2}
-                      color={white}
-                      px={4}
-                      py={2}
-                      borderRadius={20}
-                    >
-                      Sedikit ({formatDecimal(valueDerajatKeanggotaanPermintaan)}){" "}
-                    </Box>{" "}
-                    <Box
-                      as="button"
-                      bg={secondaryColor}
-                      color={white}
-                      px={4}
-                      py={2}
-                      borderRadius={20}
-                    >
-                      Banyak ({ formatDecimal(1 -valueDerajatKeanggotaanPermintaan)}){" "}
-                    </Box>
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>Produksi Es Batu</Td>
-                  <Td>{formatDecimal(valueProduksi)}</Td>
-                  <Td>
-                    <Box
-                      as="button"
-                      bg={primaryColor2}
-                      color={white}
-                      px={4}
-                      py={2}
-                      borderRadius={20}
-                    >
-                      Sedikit ({formatDecimal(valueDerajatKeanggotaanProduksi)}){" "}
-                    </Box>{" "}
-                    <Box
-                      as="button"
-                      bg={secondaryColor}
-                      color={white}
-                      px={4}
-                      py={2}
-                      borderRadius={20}
-                    >
-                      Banyak ({formatDecimal(1 - valueDerajatKeanggotaanProduksi)}){" "}
-                    </Box>
-                  </Td>
-                </Tr>
-              </Tbody>
-            </TableContainer>
-          </Table>
-          <Table mt={6} variant="striped" overflow="auto" size="sm">
-            <TableContainer>
-              <Thead>
-                <Tr>
-                  <Th>Rule</Th>
-                  <Th>Kondisi</Th>
-                  <Th>Derajat Persediaan</Th>
-                  <Th>Derajat Permintaan</Th>
-                  <Td>(αi)</Td>
-                  <Td>Zi</Td>
-                  <Td>αi×Zi</Td>
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td>R1</Td>
-                  <Td>
-                    Jika ada <Text as="b">Sedikit</Text> Persediaan dan{" "}
-                    <Text as="b">Sedikit</Text> Permintaan Maka{" "}
-                    <Text as="b">Sedikit</Text> Produksi
-                  </Td>
-                  <Td>{formatDecimal(valueR1DerajatPersediaan)}</Td>
-                  <Td>{formatDecimal(valueR1DerajatPermintaan)}</Td>
-                  <Td>{formatDecimal(valueR1Alpha)}</Td>
-                  <Td>{formatDecimal(valueR1Zi)}</Td>
-                  <Td>{formatDecimal(valueR1Aixzi)}</Td>
-                </Tr>
-                <Tr>
-                  <Td>R2</Td>
-                  <Td>
-                    Jika ada <Text as="b">Sedikit</Text> Persediaan dan{" "}
-                    <Text as="b">Banyak</Text> Permintaan Maka{" "}
-                    <Text as="b">Banyak</Text> Produksi
-                  </Td>
-                  <Td>{formatDecimal(valueR2DerajatPersediaan)}</Td>
-                  <Td>{formatDecimal(valueR2DerajatPermintaan)}</Td>
-                  <Td>{formatDecimal(valueR2Alpha)}</Td>
-                  <Td>{formatDecimal(valueR2Zi)}</Td>
-                  <Td>{formatDecimal(valueR2Aixzi)}</Td>
-                </Tr>
-                <Tr>
-                  <Td>R3</Td>
-                  <Td>
-                    Jika ada <Text as="b">Banyak</Text> Persediaan dan{" "}
-                    <Text as="b">Sedikit</Text> Permintaan Maka{" "}
-                    <Text as="b">Sedikit</Text> Produksi
-                  </Td>
-                  <Td>{formatDecimal(valueR3DerajatPersediaan)}</Td>
-                  <Td>{formatDecimal(valueR3DerajatPermintaan)}</Td>
-                  <Td>{formatDecimal(valueR3Alpha)}</Td>
-                  <Td>{formatDecimal(valueR3Zi)}</Td>
-                  <Td>{formatDecimal(valueR3Aixzi)}</Td>
-                </Tr>
-                <Tr>
-                  <Td>R4</Td>
-                  <Td>
-                    Jika ada <Text as="b">Banyak</Text> Persediaan dan{" "}
-                    <Text as="b">Banyak</Text> Permintaan Maka{" "}
-                    <Text as="b">Banyak</Text> Produksi
-                  </Td>
-                  <Td>{formatDecimal(valueR4DerajatPersediaan)}</Td>
-                  <Td>{formatDecimal(valueR4DerajatPermintaan)}</Td>
-                  <Td>{formatDecimal(valueR4Alpha)}</Td>
-                  <Td>{formatDecimal(valueR4Zi)}</Td>
-                  <Td>{formatDecimal(valueR4Aixzi)}</Td>
-                </Tr>
-                <Tr>
-                  <Td>
-                    <Text as="b">Total</Text>
-                  </Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td></Td>
-                  <Td>
-                    <Text as="b">{formatDecimal(valueProduksiEsBatu)}</Text>
-                  </Td>
-                </Tr>
-              </Tbody>
-              <TableCaption>
-                <HStack>
-                  <Text as="b"> Produksi Es Batu</Text>
-                  <Text>= ∑(αi×Zi) / ∑(αi) = 450 / 1 =</Text>
-                  <Text as="b"> {formatDecimal(valueProduksi)}</Text>
-                </HStack>
-              </TableCaption>
-            </TableContainer>
-          </Table>
-        </ModalBody>
-        <ModalFooter>
-          <VStack>
-            <Center>
-              <Button
-                bg={primaryColor}
-                color={white}
-                my={4}
-                alignContent="center"
-                alignItems="center"
-                onClick={() => {
-                  setIsResultOpen(false);
-                }}
-              >
-                Tutup
-              </Button>
-            </Center>
-          </VStack>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
-  );
-};
+            <Table
+              variant="striped"
+              overflow="auto"
+              align="center"
+              objectFit="contain"
+            >
+              <TableContainer>
+                <Thead>
+                  <Tr>
+                    <Th>Variabel</Th>
+                    <Th>Nilai</Th>
+                    <Th>Derajat Keanggotaan</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  <Tr>
+                    <Td>Persediaan</Td>
+                    <Td>{formatDecimal(valuePersediaan)}</Td>
+                    <Td>
+                      <Box
+                        as="button"
+                        bg={primaryColor2}
+                        color={white}
+                        px={4}
+                        py={2}
+                        borderRadius={20}
+                      >
+                        Sedikit (
+                        {formatDecimal(valueDerajatKeanggotaanPersediaan)}){" "}
+                      </Box>{" "}
+                      <Box
+                        as="button"
+                        bg={secondaryColor}
+                        color={white}
+                        px={4}
+                        py={2}
+                        borderRadius={20}
+                      >
+                        Banyak (
+                        {formatDecimal(1 - valueDerajatKeanggotaanPersediaan)}){" "}
+                      </Box>
+                    </Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Permintaan</Td>
+                    <Td>{formatDecimal(valuePermintaan)}</Td>
+                    <Td>
+                      <Box
+                        as="button"
+                        bg={primaryColor2}
+                        color={white}
+                        px={4}
+                        py={2}
+                        borderRadius={20}
+                      >
+                        Sedikit (
+                        {formatDecimal(valueDerajatKeanggotaanPermintaan)}){" "}
+                      </Box>{" "}
+                      <Box
+                        as="button"
+                        bg={secondaryColor}
+                        color={white}
+                        px={4}
+                        py={2}
+                        borderRadius={20}
+                      >
+                        Banyak (
+                        {formatDecimal(1 - valueDerajatKeanggotaanPermintaan)}){" "}
+                      </Box>
+                    </Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Produksi Es Batu</Td>
+                    <Td>{formatDecimal(valueProduksi)}</Td>
+                    <Td>
+                      <Box
+                        as="button"
+                        bg={primaryColor2}
+                        color={white}
+                        px={4}
+                        py={2}
+                        borderRadius={20}
+                      >
+                        Sedikit (
+                        {formatDecimal(valueDerajatKeanggotaanProduksi)}){" "}
+                      </Box>{" "}
+                      <Box
+                        as="button"
+                        bg={secondaryColor}
+                        color={white}
+                        px={4}
+                        py={2}
+                        borderRadius={20}
+                      >
+                        Banyak (
+                        {formatDecimal(1 - valueDerajatKeanggotaanProduksi)}){" "}
+                      </Box>
+                    </Td>
+                  </Tr>
+                </Tbody>
+              </TableContainer>
+            </Table>
+            <Table mt={6} variant="striped" overflow="auto" size="sm">
+              <TableContainer>
+                <Thead>
+                  <Tr>
+                    <Th>Rule</Th>
+                    <Th>Kondisi</Th>
+                    <Th>Derajat Persediaan</Th>
+                    <Th>Derajat Permintaan</Th>
+                    <Td>(αi)</Td>
+                    <Td>Zi</Td>
+                    <Td>αi×Zi</Td>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  <Tr>
+                    <Td>R1</Td>
+                    <Td>
+                      Jika Persediaan{" "}
+                      <Text as="b" color={secondaryColor}>
+                        Sedikit
+                      </Text>{" "}
+                      dan Permintaan{" "}
+                      <Text as="b" color={secondaryColor}>
+                        Sedikit
+                      </Text>
+                      , maka Produksi{" "}
+                      <Text as="b" color={secondaryColor}>
+                        Sedikit
+                      </Text>
+                      .
+                    </Td>
 
+                    <Td>{formatDecimal(valueR1DerajatPersediaan)}</Td>
+                    <Td>{formatDecimal(valueR1DerajatPermintaan)}</Td>
+                    <Td>{formatDecimal(valueR1Alpha)}</Td>
+                    <Td>{formatDecimal(valueR1Zi)}</Td>
+                    <Td>{formatDecimal(valueR1Aixzi)}</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>R2</Td>
+                    <Td>
+                      Jika Persediaan{" "}
+                      <Text as="b" color={secondaryColor}>
+                        Sedikit
+                      </Text>{" "}
+                      dan Permintaan{" "}
+                      <Text as="b" color={primaryColor}>
+                        Banyak
+                      </Text>
+                      , maka Produksi{" "}
+                      <Text as="b" color={primaryColor}>
+                        Banyak
+                      </Text>
+                      .
+                    </Td>
+
+                    <Td>{formatDecimal(valueR2DerajatPersediaan)}</Td>
+                    <Td>{formatDecimal(valueR2DerajatPermintaan)}</Td>
+                    <Td>{formatDecimal(valueR2Alpha)}</Td>
+                    <Td>{formatDecimal(valueR2Zi)}</Td>
+                    <Td>{formatDecimal(valueR2Aixzi)}</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>R3</Td>
+                    <Td>
+                      Jika Persediaan{" "}
+                      <Text as="b" color={primaryColor}>
+                        Banyak
+                      </Text>{" "}
+                      dan Permintaan{" "}
+                      <Text as="b" color={secondaryColor}>
+                        Sedikit
+                      </Text>
+                      , maka Produksi{" "}
+                      <Text as="b" color={secondaryColor}>
+                        Sedikit
+                      </Text>
+                      .
+                    </Td>
+                    <Td>{formatDecimal(valueR3DerajatPersediaan)}</Td>
+                    <Td>{formatDecimal(valueR3DerajatPermintaan)}</Td>
+                    <Td>{formatDecimal(valueR3Alpha)}</Td>
+                    <Td>{formatDecimal(valueR3Zi)}</Td>
+                    <Td>{formatDecimal(valueR3Aixzi)}</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>R4</Td>
+
+                    <Td>
+                      Jika Persediaan{" "}
+                      <Text as="b" color={primaryColor}>
+                        Banyak
+                      </Text>{" "}
+                      dan Permintaan{" "}
+                      <Text as="b" color={primaryColor}>
+                        Banyak
+                      </Text>
+                      , maka Produksi{" "}
+                      <Text as="b" color={primaryColor}>
+                        Banyak
+                      </Text>
+                      .
+                    </Td>
+                    <Td>{formatDecimal(valueR4DerajatPersediaan)}</Td>
+                    <Td>{formatDecimal(valueR4DerajatPermintaan)}</Td>
+                    <Td>{formatDecimal(valueR4Alpha)}</Td>
+                    <Td>{formatDecimal(valueR4Zi)}</Td>
+                    <Td>{formatDecimal(valueR4Aixzi)}</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>
+                      <Text as="b">Total</Text>
+                    </Td>
+                    <Td></Td>
+                    <Td></Td>
+                    <Td></Td>
+                    <Td></Td>
+                    <Td></Td>
+                    <Td>
+                      <Text as="b">{formatDecimal(valueProduksiEsBatu)}</Text>
+                    </Td>
+                  </Tr>
+                </Tbody>
+                <TableCaption>
+                  <HStack>
+                    <Text as="b"> Produksi Es Batu</Text>
+                    <Text>= ∑(αi×Zi) / ∑(αi) = 450 / 1 =</Text>
+                    <Text as="b"> {formatDecimal(valueProduksi)}</Text>
+                  </HStack>
+                </TableCaption>
+              </TableContainer>
+            </Table>
+          </ModalBody>
+          <ModalFooter>
+            <VStack>
+              <Center>
+                <Button
+                  bg={primaryColor}
+                  color={white}
+                  my={4}
+                  alignContent="center"
+                  alignItems="center"
+                  onClick={() => {
+                    setIsResultOpen(false);
+                  }}
+                >
+                  Tutup
+                </Button>
+              </Center>
+            </VStack>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    );
+  };
 
   if (loading) return <Loading />;
 

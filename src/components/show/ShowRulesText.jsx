@@ -1,4 +1,4 @@
-import { primaryColor, white } from "@/lib/color";
+import { primaryColor, secondaryColor, white } from "@/lib/color";
 import {
   Box,
   Flex,
@@ -25,40 +25,82 @@ const ShowRulesText = () => {
         mt={4}
       >
         <Text fontSize="xl" as="b">
-         Aturan yang digunakan
+          Aturan yang digunakan
         </Text>
         <Table mt={4}>
           <Thead>
             <Tr>
               <Th>R1</Th>
               <Td>
-                Jika ada <Text as="b">Sedikit</Text> Persediaan dan{" "}
-                <Text as="b">Sedikit</Text> Permintaan Maka{" "}
-                <Text as="b">Sedikit</Text> Produksi
+                Jika Persediaan{" "}
+                <Text as="b" color={secondaryColor}>
+                  Sedikit
+                </Text>{" "}
+                dan Permintaan{" "}
+                <Text as="b" color={secondaryColor}>
+                  Sedikit
+                </Text>
+                , maka Produksi{" "}
+                <Text as="b" color={secondaryColor}>
+                  Sedikit
+                </Text>
+                .
               </Td>
             </Tr>
             <Tr>
               <Th>R2</Th>
               <Td>
-                Jika ada <Text as="b">Sedikit</Text> Persediaan dan{" "}
-                <Text as="b">Banyak</Text> Permintaan Maka{" "}
-                <Text as="b">Banyak</Text> Produksi
+                Jika Persediaan{" "}
+                <Text as="b" color={secondaryColor}>
+                  Sedikit
+                </Text>{" "}
+                dan Permintaan{" "}
+                <Text as="b" color={primaryColor}>
+                  Banyak
+                </Text>
+                , maka Produksi{" "}
+                <Text as="b" color={primaryColor}>
+                  Banyak
+                </Text>
+                .
               </Td>
             </Tr>
             <Tr>
               <Th>R3</Th>
+
               <Td>
-                Jika ada <Text as="b">Banyak</Text> Persediaan dan{" "}
-                <Text as="b">Sedikit</Text> Permintaan Maka{" "}
-                <Text as="b">Sedikit</Text> Produksi
+                Jika Persediaan{" "}
+                <Text as="b" color={primaryColor}>
+                  Banyak
+                </Text>{" "}
+                dan Permintaan{" "}
+                <Text as="b" color={secondaryColor}>
+                  Sedikit
+                </Text>
+                , maka Produksi{" "}
+                <Text as="b" color={secondaryColor}>
+                  Sedikit
+                </Text>
+                .
               </Td>
             </Tr>
             <Tr>
               <Th>R4</Th>
+
               <Td>
-                Jika ada <Text as="b">Banyak</Text> Persediaan dan{" "}
-                <Text as="b">Banyak</Text> Permintaan Maka{" "}
-                <Text as="b">Banyak</Text> Produksi
+                Jika Persediaan{" "}
+                <Text as="b" color={primaryColor}>
+                  Banyak
+                </Text>{" "}
+                dan Permintaan{" "}
+                <Text as="b" color={primaryColor}>
+                  Banyak
+                </Text>
+                , maka Produksi{" "}
+                <Text as="b" color={primaryColor}>
+                  Banyak
+                </Text>
+                .
               </Td>
             </Tr>
           </Thead>
