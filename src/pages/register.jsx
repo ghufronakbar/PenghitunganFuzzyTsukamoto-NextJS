@@ -28,7 +28,7 @@ function Copyright(props) {
     <Text align="center" {...props}>
       {"Copyright © "}
       <Link color="blue.500" href={process.env.BASE_URL}>
-        Event Ease
+        Penghitungan Produksi Es Fuzzy Tsukamoto
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -96,13 +96,16 @@ export default function Register() {
       <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} flex="1">
         <Box
           display={{ base: "none", md: "block" }}
-          bgImage="url(https://source.unsplash.com/random?wallpapers)"
+          bgImage="/ice.jpg"
           bgSize="cover"
           bgPosition="center"
         />
         <Container maxW="md" py={8}>
           <Flex align="center" justify="center" direction="column">
             <Avatar bg={primaryColor} icon={<LockIcon />} mb={4} />
+            <Heading as="h1" size="lg" mb={6}>
+              Register
+            </Heading>
             <Heading as="h1" size="lg" mb={6}></Heading>
             <Box as="form" w="100%" onSubmit={handleRegister}>
               <VStack spacing={4}>

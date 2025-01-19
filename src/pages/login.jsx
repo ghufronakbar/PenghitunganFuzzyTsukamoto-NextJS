@@ -93,7 +93,7 @@ export default function SignInSide() {
       <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} flex="1">
         <Box
           display={{ base: "none", md: "block" }}
-          bgImage="url(https://source.unsplash.com/random?wallpapers)"
+          bgImage="/ice.jpg"
           bgSize="cover"
           bgPosition="center"
         />
@@ -134,7 +134,7 @@ export default function SignInSide() {
                     router.push(`/register`);
                   }}
                 >
-                  <Text>Don't have an account?</Text>
+                  <Text>Don&apos;t have an account?</Text>
                   <Text color={primaryColor}>Register</Text>
                 </HStack>
               </Flex>

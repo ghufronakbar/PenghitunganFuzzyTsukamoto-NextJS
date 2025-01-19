@@ -84,7 +84,7 @@ export function TableHistory() {
       return (
         <Alert status="warning">
           <AlertIcon />
-          There's no data
+          There&apos;s no data
         </Alert>
       );
     }

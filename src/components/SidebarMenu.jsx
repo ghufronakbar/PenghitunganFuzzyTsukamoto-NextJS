@@ -1,12 +1,10 @@
-import { Box, Center, Stack, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstanceAuthorization from "@/lib/axiosInstanceAuthorization";
-import { primaryColor, secondaryColor, white } from "@/lib/color";
-import Image from "next/image";
+import { primaryColor, tersierColor, white } from "@/lib/color";
+import Link from "next/link";
 
-export function SidebarMenu() {
+export function SidebarMenu({ children }) {
   const router = useRouter();
 
   const {
@@ -27,39 +25,99 @@ export function SidebarMenu() {
   };
 
   return (
-    <>
-      <Sidebar backgroundColor={primaryColor}>
-        <br />
-        <Box
-          p={3}
-          mx={2}
-          borderWidth="1px"
-          borderRadius="lg"
-          overflow="hidden"
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
+    <div style={{ display: "flex", zIndex: "10" }}>
+      {/* Sidebar */}
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          height: "100%",
+          width: "250px",
+          backgroundColor: white,
+          color: primaryColor,
+          display: "flex",
+          flexDirection: "column",
+          padding: "20px",
+          boxShadow: "2px 0 5px rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        <Link
+          style={{
+            marginBottom: "30px",
+            textAlign: "center",
+            fontSize: "18px",
+            fontWeight: "bold",
+            border: "0.6px solid #444",
+            borderRadius: "10px",
+            padding: "5px 10px",
+          }}
+          href={"/profile"}
         >
-          <Stack onClick={() => router.push(`/profile`)}>
-            <Text as="b" fontSize="2xl" color={white} textAlign="center">
-              {profileSB && profileSB.fullname}
-            </Text>
-          </Stack>
-        </Box>
-        <br />
-        <br />
-        <Menu>
-          <MenuItem onClick={() => router.push(`/calculate`)}>
-            <Text color={white}>🧮 Kalkulasi</Text>
-          </MenuItem>
-          <MenuItem onClick={() => router.push(`/history`)}>
-            <Text color={white}>📒 Riwayat</Text>
-          </MenuItem>
-          <MenuItem onClick={handleLogout}>
-            <Text color={white}>🔒 Logout</Text>
-          </MenuItem>
-        </Menu>
-      </Sidebar>
-    </>
+          {profileSB?.fullname}
+        </Link>
+        {MENU_ITEM.map((item, index) => (
+          <Link
+            key={index}
+            style={{
+              cursor: "pointer",
+              padding: "10px",
+              marginBottom: "10px",
+              borderRadius: "5px",
+              backgroundColor: tersierColor,
+              textAlign: "center",
+              transition: "background-color 0.3s",
+              color: white,
+            }}
+            href={item.href}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = "#444")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = tersierColor)
+            }
+          >
+            {item.name}
+          </Link>
+        ))}
+        <div
+          style={{
+            cursor: "pointer",
+            padding: "10px",
+            borderRadius: "5px",
+            backgroundColor: "#e53e3e",
+            textAlign: "center",
+            color: white,
+          }}
+          onClick={handleLogout}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.backgroundColor = "#d32f2f")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.backgroundColor = "#e53e3e")
+          }
+        >
+          🔒 Logout
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div
+        style={{
+          marginLeft: "250px", // Menyesuaikan lebar sidebar
+          padding: "20px",
+          width: "100%",
+          backgroundColor: "#f7fafc", // Warna latar konten
+          minHeight: "100vh",
+        }}
+      >
+        {children}
+      </div>
+    </div>
   );
 }
+
+const MENU_ITEM = [
+  { name: "🧮 Kalkulasi", href: "/calculate" },
+  { name: "📒 Riwayat", href: "/history" },
+];
